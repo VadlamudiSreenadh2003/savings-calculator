@@ -80,20 +80,35 @@ const SavingsCalculator = () => {
     setResult(null);
   };
 
+ 
+
+
   const doughnutData = result && {
-    labels: ["Monthly Saving", "Employee PF", "Remaining Balance"],
-    datasets: [
-      {
-        data: [
-          result.monthlySaving,
-          result.monthlyEmployeePF,
-          result.netMonthly - result.monthlySaving,
-        ],
-        backgroundColor: ["#4caf50", "#f44336", "#2196f3"],
-        hoverOffset: 8,
-      },
-    ],
-  };
+  labels:
+    viewMode === "monthly"
+      ? ["Monthly Saving", "Employee PF", "Remaining Balance"]
+      : ["Yearly Saving", "Yearly Employee PF", "Remaining Balance"],
+
+  datasets: [
+    {
+      data:
+        viewMode === "monthly"
+          ? [
+              result.monthlySaving,
+              result.monthlyEmployeePF,
+              result.netMonthly - result.monthlySaving,
+            ]
+          : [
+              result.yearlySaving,
+              result.yearlyEmployeePF,
+              (result.netMonthly * 12) - result.yearlySaving,
+            ],
+      backgroundColor: ["#4caf50", "#f44336", "#2196f3"],
+      hoverOffset: 8,
+    },
+  ],
+};
+
 
   const doughnutOptions = {
     responsive: true,
